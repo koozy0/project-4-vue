@@ -2,12 +2,17 @@
   <div class="camera">
     <h1>{{ title }}</h1>
 
-    <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
-    <video autoplay></video>
-    <img src="">
-    <canvas style="display:none;"></canvas>
-    <button v-on:click="toggleCamera">Toggle Camera</button>
-    <button v-on:click="snapshot">Take Snapshot</button>
+    <div id="mobile">
+      <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
+    </div>
+
+    <div id="desktop">
+      <video autoplay></video>
+      <img src="">
+      <canvas style="display:none;"></canvas>
+      <button v-on:click="toggleCamera">Toggle Camera</button>
+      <button v-on:click="snapshot">Take Snapshot</button>
+    </div>
   </div>
 </template>
 
@@ -70,5 +75,13 @@
 </script>
 
 <style scoped>
+@media screen and (min-width: 0px) and (max-width: 480px) {
+  #mobile { display: block; }  /* show it on small screens */
+  #desktop { display: none; } /* hide it on small screens */
+}
 
+@media screen and (min-width: 481px) {
+  #desktop { display: block; }  /* show it on large screens */
+  #mobile { display: none; } /* hide it on large screens */
+}
 </style>
