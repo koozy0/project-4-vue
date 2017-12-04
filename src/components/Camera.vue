@@ -22,33 +22,35 @@
     },
     methods: {
       toggleCamera: function () {
-        const errorCallback = function(e) {
-          console.log('Reeeejected!', e)
-        }
-
         const video = document.querySelector('video')
+        const mediaDevices = navigator.mediaDevices
+        const constraints = {
+          advanced: [{
+              facingMode: "environment"
+          }]
+        }
 
         const that = this
         this.isCapturing = !this.isCapturing
 
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
 
-        if (navigator.getUserMedia && this.isCapturing) {
-          navigator.getUserMedia({video: true}, function(stream) {
+        if (mediaDevices.getUserMedia && this.isCapturing) {
+          mediaDevices.getUserMedia({video: constraints})
+          .then(stream => {
+            console.log('capture starting')
             video.src = window.URL.createObjectURL(stream)
             that.stream = stream
-            console.log('capturing starting')
-          }, errorCallback)
+          })
+          .catch(err => console.log(err))
         } else {
-          const stopTracks = function (track) {
-            track.stop()
-          }
-          console.log('capturing stopping')
-          video.src = null
+          const stopTracks = track => track.stop()
+          console.log('capture stopping')
           that.stream.getTracks().forEach(stopTracks)
+          video.src = null
         }
       },
-      snapshot: function () {
+      snapshot: function (e) {
         console.log('snapshot!')
         const that = this
         const canvas = document.querySelector('canvas')
