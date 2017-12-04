@@ -2,6 +2,7 @@
   <div class="camera">
     <h1>{{ title }}</h1>
 
+    <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
     <video autoplay></video>
     <img src="">
     <canvas style="display:none;"></canvas>
