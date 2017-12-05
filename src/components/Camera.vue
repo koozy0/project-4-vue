@@ -1,17 +1,17 @@
 <template>
   <div class="camera">
-    <h1>{{ title }}</h1>
-
     <div id="mobile">
       <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
     </div>
 
     <div id="desktop">
-      <video autoplay></video>
+      <div id="video">
+        <video autoplay></video>
+      </div>
       <img src="">
-      <canvas style="display:none;"></canvas>
-      <button v-on:click="toggleCamera">Toggle Camera</button>
-      <button v-on:click="snapshot">Take Snapshot</button>
+      <canvas style="display:none;" height="480" width="640"></canvas>
+      <button v-if="isCapturing" v-on:click="snapshot">Take Snapshot</button>
+      <button v-else v-on:click="toggleCamera">Toggle Camera</button>
     </div>
   </div>
 </template>
@@ -21,50 +21,44 @@
     name: 'camera',
     data() {
       return {
-        title: 'Camera',
         stream: null,
         isCapturing: false
       }
     },
     methods: {
       toggleCamera: function () {
-        const video = document.querySelector('video')
-        const mediaDevices = navigator.mediaDevices
-        const constraints = {
-          advanced: [{
-              facingMode: "environment"
-          }]
+        const errorCallback = function() {
+          console.log('Error')
         }
-
+        const video = document.querySelector('video')
         const that = this
-        this.isCapturing = !this.isCapturing
+        const videoDiv = document.getElementById('video')
+        videoDiv.style.display="block"
 
+        this.isCapturing = !this.isCapturing
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
 
-        if (mediaDevices.getUserMedia && this.isCapturing) {
-          mediaDevices.getUserMedia({video: constraints})
-          .then(stream => {
-            console.log('capture starting')
+        if (navigator.getUserMedia && this.isCapturing) {
+          navigator.getUserMedia({video: true}, function(stream) {
             video.src = window.URL.createObjectURL(stream)
             that.stream = stream
-          })
-          .catch(err => console.log(err))
+            document.querySelector('img').src=""
+          }, errorCallback)
         } else {
           const stopTracks = track => track.stop()
-          console.log('capture stopping')
           that.stream.getTracks().forEach(stopTracks)
           video.src = null
+          videoDiv.style.display="none"
         }
       },
-      snapshot: function (e) {
-        console.log('snapshot!')
+      snapshot: function () {
         const that = this
         const canvas = document.querySelector('canvas')
         const ctx = canvas.getContext('2d')
         const video = document.querySelector('video')
 
         if (that.stream) {
-          ctx.drawImage(video, 0, 0);
+          ctx.drawImage(video, 0, 0, 640, 480);
           document.querySelector('img').src = canvas.toDataURL('image/webp');
         }
 
