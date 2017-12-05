@@ -12,6 +12,7 @@
       <canvas style="display:none;" height="480" width="640"></canvas>
       <button v-if="isCapturing" v-on:click="snapshot">Take Snapshot</button>
       <button v-else v-on:click="toggleCamera">Toggle Camera</button>
+      <button v-on:click="vision">Vision</button>
     </div>
   </div>
 </template>
@@ -22,7 +23,8 @@
     data() {
       return {
         stream: null,
-        isCapturing: false
+        isCapturing: false,
+        image: null
       }
     },
     methods: {
@@ -58,11 +60,32 @@
         const video = document.querySelector('video')
 
         if (that.stream) {
-          ctx.drawImage(video, 0, 0, 640, 480);
-          document.querySelector('img').src = canvas.toDataURL('image/webp');
+          ctx.drawImage(video, 0, 0, 640, 480)
+          that.image = canvas.toDataURL('image/webp')
+          document.querySelector('img').src = that.image
         }
 
         this.toggleCamera()
+      },
+      vision: function () {
+        const key = 'AIzaSyBawpo7NovwPMYtBr_K-71BaF--_hluLSA'
+        const url = `https://vision.googleapis.com/v1/images:annotate?key=${key}`
+        let content = this.image.replace('data:image/webp;base64,', '')
+        let body =
+        {
+          requests: [
+            {
+              image: { content: content },
+              features: [{ type: "DOCUMENT_TEXT_DETECTION" }]
+            }
+          ]
+        }
+        this.$http.post(url, body)
+        .then(response => {
+          console.log(response.body.responses[0])
+        }, response => {
+          console.log('error', response)
+        })
       }
     }
   }
