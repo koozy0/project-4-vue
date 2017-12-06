@@ -38,10 +38,6 @@ npm run build --report
 ## Edit Profile
 ![](app/assets/images/readme/wireframe3.jpg)
 
-## <center>User Stories
-
-### FoodSpace
-
 ## <center> User Stories
 
 1. As a user, I can scan multiple receipts for different restaurants
