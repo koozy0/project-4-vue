@@ -76,13 +76,62 @@
           requests: [
             {
               image: { content: content },
-              features: [{ type: "DOCUMENT_TEXT_DETECTION" }]
+              features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
+              imageContext: {languageHints: ['en']}
             }
           ]
         }
         this.$http.post(url, body)
         .then(response => {
-          console.log(response.body.responses[0])
+          const checkNewRow = function () {
+            if (itemObj.quantity !== 0 && itemObj.item !== '' && itemObj.price.match(/^\$\d{0,8}([\.\,]\d{1,2})?$/)) {
+              itemObj.item = itemObj.item.slice(0, -1)
+              receipt.push(itemObj)
+              itemObj = {
+                quantity: 0,
+                item: '',
+                price: ''
+              }
+            }
+          }
+
+          let responseText = response.body.responses[0].textAnnotations[0].description.split('\n')
+          let responseArr = response.body.responses[0].textAnnotations
+          responseArr.shift()
+          responseArr.sort(function(a, b) {
+            var x = a.boundingPoly.vertices[0].y - b.boundingPoly.vertices[0].y
+            return x == 0 ? a.boundingPoly.vertices[0].x - b.boundingPoly.vertices[0].x : x
+          })
+
+          let itemObj = {
+            quantity: 0,
+            item: '',
+            price: ''
+          }
+
+          let receipt = []
+
+          for (let i = 0, len = responseArr.length; i < len; i++) {
+            let elem = responseArr[i].description
+
+            if (elem === '$') {
+              checkNewRow()
+
+              itemObj.price += elem + responseArr[i+1].description + responseArr[i+2].description + responseArr[i+3].description
+              i += 3
+            } else if (!isNaN(parseInt(elem))) {
+              checkNewRow()
+
+              if (itemObj.quantity === 0) itemObj.quantity = parseInt(elem)
+            } else {
+              itemObj.item += elem + ' '
+            }
+
+            checkNewRow()
+            // console.log(i, itemObj) <-- TESTING ONLY
+          }
+          // console.log('responseArr: ', responseArr) <-- TESTING ONLY
+          // console.log('receipt: ', receipt) <-- TESTING ONLY
         }, response => {
           console.log('error', response)
         })
