@@ -86,6 +86,7 @@
           const checkNewRow = function () {
             if (itemObj.quantity !== 0 && itemObj.item !== '' && itemObj.price.match(/^\$\d{0,8}([\.\,]\d{1,2})?$/)) {
               itemObj.item = itemObj.item.slice(0, -1)
+              itemObj.price.replace(',', '.')
               receipt.push(itemObj)
               itemObj = {
                 quantity: 0,
@@ -99,7 +100,7 @@
           let responseArr = response.body.responses[0].textAnnotations
           responseArr.shift()
           responseArr.sort(function(a, b) {
-            var x = a.boundingPoly.vertices[0].y - b.boundingPoly.vertices[0].y
+            let x = a.boundingPoly.vertices[0].y - b.boundingPoly.vertices[0].y
             return x == 0 ? a.boundingPoly.vertices[0].x - b.boundingPoly.vertices[0].x : x
           })
 
