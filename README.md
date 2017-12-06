@@ -27,16 +27,18 @@ npm run build --report
 ```
 
 ## ERD
-![](app/assets/images/readme/ERD.png)
+![](src/assets/images/readme/ERD.png)
 
-## Scan Receipts
-![](app/assets/images/readme/wireframe1.jpg)
+## Wireframes
 
-## Register/Login
-![](app/assets/images/readme/wireframe2.jpg)
+### Scan Receipts Pages
+![](src/assets/images/readme/wireframe1.jpg)
 
-## Edit Profile
-![](app/assets/images/readme/wireframe3.jpg)
+### Register/Login Pages
+![](src/assets/images/readme/wireframe2.jpg)
+
+### Edit Profile Page
+![](src/assets/images/readme/wireframe3.jpg)
 
 ## <center> User Stories
 
