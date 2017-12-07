@@ -17,7 +17,7 @@
       <img src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
       <br>
-      <md-button class="md-icon-button md-raised"
+      <md-button class="md-icon-button md-raised circleButton"
         v-if="isCapturing"
         v-on:click="snapshot">
         <md-icon>camera_alt</md-icon>
@@ -26,13 +26,13 @@
       <div v-else>
         <md-button
           v-on:click="toggleCamera"
-          class="md-raised md-primary">
+          class="md-raised md-primary buttonStyle">
           Scan New Receipt
         </md-button>
 
         <md-button
           v-on:click="vision"
-          class="md-raised md-primary">
+          class="md-raised md-primary buttonStyle">
           Vision
         </md-button>
       </div>
@@ -184,6 +184,11 @@
 }
 
 .cam {
-  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.circleButton {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #404243;
 }
 </style>

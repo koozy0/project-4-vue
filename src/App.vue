@@ -1,8 +1,8 @@
 <template>
-  <div class="container" id="app">
-    <Topbar></Topbar>
-    <router-view/>
-    <Bottombar></Bottombar>
+  <div id="app">
+    <Topbar class="darkGrey"></Topbar>
+    <router-view class="container wavesImage"/>
+    <Bottombar class="darkGrey"></Bottombar>
   </div>
 </template>
 
@@ -19,24 +19,19 @@ export default {
 }
 </script>
 
-<style>
-html, body {
-  height: 100%;
+<style lang="scss">
+
+.container{
+  min-height: 100%;
+  min-width: 100%;
+  padding: 20px 150px;
 }
-body {
-  display: flex;
-  flex-direction: column;
-}
-.content {
-  flex: 1 0 auto;
-}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -47,26 +42,42 @@ body {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.26);
-  background: white;
+  color: white !important;
 }
 
 .md-app {
   max-height: 100%;
-  border: 1px solid blue;
 }
 
 .center {
   justify-content: center;
 }
 
-.crimson {
-  font-family: 'Crimson Text', serif;
-  font-weight: 700;
-  font-size: 20px;
+.md-title {
+  text-transform: uppercase;
+  font-weight: 500 !important;
+  letter-spacing: 0.35em !important;
+  text-decoration: none !important;
 }
 
-.black {
-  background-color: grey;
+.darkGrey {
+  background-color: #404243;
 }
+
+.whiteFont {
+  color:white;
+}
+
+.wavesImage {
+  background-image: url('./assets/images/waves.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.buttonStyle {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #404243;
+  border-radius: 5px;
+}
+
 </style>
