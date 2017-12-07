@@ -9,7 +9,6 @@ import 'vue-material/dist/vue-material.min.css'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
-
 Vue.use(vueResource)
 
 /* eslint-disable no-new */

@@ -154,9 +154,7 @@
             }
 
             checkNewRow()
-            // console.log(i, itemObj) // <-- TESTING ONLY
           }
-          // console.log('responseArr: ', responseArr) // <-- TESTING ONLY
           this.receipt = receipt
           console.log('receipt: ', this.receipt)
           document.querySelector('img').src = ''

@@ -1,41 +1,67 @@
 <template>
   <div class="receipt">
     <h1>Receipt</h1>
-    <tr>
-      <th>Qty</th>
-      <th>Item</th>
-      <th>Unit Price</th>
-    </tr>
-    <tr v-for="item in receipt">
-      <td>{{item.quantity}}</td>
-      <td>{{item.item}}</td>
-      <td>{{item.price}}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Sub-Total: </th>
-      <td v-if="subTotal !== 0">${{ subTotal }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Service Charge: </th>
-      <td v-if="subTotal !== 0">${{ svcChg }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>GST: </th>
-      <td v-if="subTotal !== 0">${{ gst }}</td>
-    </tr>
-    <tr v-if="rounding !== 0">
-      <th></th>
-      <th>Rounding: </th>
-      <td>- ${{ rounding }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Total: </th>
-      <td>${{ total }}</td>
-    </tr>
+    <div v-if="initialReceipt !== undefined">
+      <table>
+        <tr>
+          <th>Selected</th>
+          <th>Qty</th>
+          <th>Item</th>
+          <th>Unit Price</th>
+        </tr>
+        <tr v-for="item in receipt">
+          <td><input type="checkbox"
+            v-model="checkedItems"
+            v-bind:value="item">
+          </td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.item}}</td>
+          <td>{{item.price}}</td>
+        </tr>
+        <tr style="border-top:1px solid black;" v-if="subTotal !== 0">
+          <th></th>
+          <th></th>
+          <th>Sub-Total: </th>
+          <th>${{ subTotal }}</th>
+        </tr>
+        <tr>
+          <th><input type="checkbox"
+            v-model="calcSvcChg"
+            value="true"></th>
+          <th></th>
+          <th>10% Service Charge: </th>
+          <td>${{ svcChg }}</td>
+        </tr>
+        <tr>
+          <th><input type="checkbox"
+            v-model="calcGst"
+            value="true"></th>
+          <th></th>
+          <th>7% GST: </th>
+          <td>${{ gst }}</td>
+        </tr>
+        <tr v-if="rounding !== 0">
+          <th></th>
+          <th></th>
+          <th>Rounding: </th>
+          <td>( ${{ rounding }} )</td>
+        </tr>
+        <tr style="border-top:1px solid black;border-bottom:4px double black;">
+          <th></th>
+          <th></th>
+          <th>Total: </th>
+          <th>${{ total }}</th>
+        </tr>
+      </table>
+      <br>
+      <md-button
+        v-on:click="getSubTotal"
+        class="md-raised md-primary">
+        Calculate
+      </md-button>
+    </div>
+    <h3 v-else>Please scan a receipt</h3>
+    <br>
   </div>
 </template>
 
@@ -50,20 +76,30 @@
         svcChg: 0,
         gst: 0,
         rounding: 0,
-        total: 0
+        total: 0,
+        checkedItems: [],
+        calcSvcChg: false,
+        calcGst: false
       }
     },
     methods: {
       getSubTotal: function () {
-        const receipt = this.receipt
+        let items = this.checkedItems.length === 0 ? this.receipt : this.checkedItems
         let subTotal = 0
 
-        receipt.forEach(item => {
+        items.forEach(item => {
           let unitPrice = item.price.replace('$', '')
           unitPrice = parseFloat(unitPrice)
           subTotal += item.quantity * unitPrice
         })
         this.subTotal = subTotal.toFixed(2)
+
+        if (this.calcSvcChg) this.getSvcChg()
+        else this.svcChg = 0
+        if (this.calcGst) this.getGst()
+        else this.gst = 0
+        this.getTotal()
+        this.getRounding()
       },
       getSvcChg: function () {
         this.svcChg = (this.subTotal * 0.10).toFixed(2)
@@ -77,13 +113,16 @@
         else this.gst = (this.subTotal * 0.07).toFixed(2)
       },
       getTotal: function () {
+        this.total = 0
         let subTotal = parseFloat(this.subTotal)
         let svcChg = parseFloat(this.svcChg)
         let gst = parseFloat(this.gst)
-        this.total += Math.round((subTotal + svcChg + gst) * 10) / 10
-        this.total = this.total.toFixed(2)
+        let total = Math.round((subTotal + svcChg + gst) * 10) / 10
+        total = total.toFixed(2)
+        this.total = total
       },
       getRounding: function () {
+        this.rounding = 0
         let subTotal = parseFloat(this.subTotal)
         let svcChg = parseFloat(this.svcChg)
         let gst = parseFloat(this.gst)
@@ -94,15 +133,29 @@
       }
     },
     mounted () {
-      this.getSubTotal()
-      this.getSvcChg()
-      this.getGst()
-      this.getTotal()
-      this.getRounding()
+      if (this.receipt !== undefined) {
+        this.getSubTotal()
+        this.getSvcChg()
+        this.getGst()
+        this.getTotal()
+        this.getRounding()
+      }
     }
   }
 </script>
 
 <style scoped>
-
+.receipt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+  text-align: left;
+  padding: 10px;
+  font-size: 20px;
+}
 </style>
