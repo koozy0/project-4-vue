@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="app">
     <Topbar></Topbar>
-    <router-view class="black"/>
+    <router-view/>
     <Bottombar></Bottombar>
   </div>
 </template>
@@ -26,7 +26,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 .md-ripple.md-disabled {
@@ -57,5 +56,4 @@ export default {
 .black {
   background-color: grey;
 }
-
 </style>

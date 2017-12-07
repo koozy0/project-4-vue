@@ -2,7 +2,9 @@
   <div class="camera">
     <div id="mobile">
       <br>
-      <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
+      <p>Capture Image:
+        <input type="file" accept="image/*" id="capture" capture="camera">
+      </p>
       <br>
     </div>
 
@@ -11,17 +13,20 @@
       <div id="video">
         <video class="cam" autoplay></video>
       </div>
-      <br>
-      <br>
+      <br><br>
       <img class="cam" src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
       <br>
-      <md-button class="md-icon-button md-raised" v-if="isCapturing" v-on:click="snapshot">
+      <md-button class="md-icon-button md-raised"
+        v-if="isCapturing"
+        v-on:click="snapshot">
         <md-icon>camera_alt</md-icon>
       </md-button>
-      <md-button v-else v-on:click="toggleCamera" class="md-raised md-primary">Scan New Receipt</md-button>
-
-
+      <md-button
+        v-else
+        v-on:click="toggleCamera" class="md-raised md-primary">
+        Scan New Receipt
+      </md-button>
     </div>
   </div>
 </template>
