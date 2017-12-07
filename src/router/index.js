@@ -6,6 +6,7 @@ import Camera from '../components/Camera'
 import Profile from '../components/Profile'
 import Register from '../components/Register'
 import Login from '../components/Login'
+import Receipt from '../components/Receipt'
 
 Vue.use(Router)
 
@@ -35,6 +36,12 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/receipt',
+      name: 'receipt',
+      component: Receipt,
+      props: true
     }
   ]
 })
