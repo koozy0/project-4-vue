@@ -1,7 +1,7 @@
 # Splitzz
 ##### PROJECT 4
 
- [Live Link (Heroku)](https://splitz.herokuapp.com/)
+ [Live Link (Heroku)](https://splitzz.herokuapp.com/)
 
 ## Group Members
 * [Zheng Yu (GitHub)](https://github.com/koozy0)
