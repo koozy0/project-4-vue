@@ -45,9 +45,6 @@ export default {
   color: white !important;
 }
 
-.bottomNavButton {
-  color: white;
-}
 .md-app {
   max-height: 100%;
 }
@@ -57,7 +54,6 @@ export default {
 }
 
 .md-title {
-  color: white;
   text-transform: uppercase;
   font-weight: 500 !important;
   letter-spacing: 0.35em !important;
@@ -83,4 +79,5 @@ export default {
   color: #404243;
   border-radius: 5px;
 }
+
 </style>

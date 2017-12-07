@@ -17,7 +17,7 @@
       <img src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
       <br>
-      <md-button class="md-icon-button md-raised buttonStyle"
+      <md-button class="md-icon-button md-raised circleButton"
         v-if="isCapturing"
         v-on:click="snapshot">
         <md-icon>camera_alt</md-icon>
@@ -186,7 +186,11 @@
 }
 
 .cam {
-  border: 2px solid #2DEFD5;
-  border-radius: 5px;
+  border-radius: 15px;
+}
+
+.circleButton {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #404243;
 }
 </style>
