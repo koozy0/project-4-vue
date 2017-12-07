@@ -12,7 +12,7 @@
               <md-field :class="getValidationClass('firstName')">
                 <label for="first-name">Name</label>
                 <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
+                <span class="md-error" v-if="!$v.form.firstName.required">The name is required</span>
                 <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span>
               </md-field>
             </div>
@@ -28,14 +28,14 @@
           <md-field :class="getValidationClass('email')">
             <label for="email">Password</label>
             <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
+            <span class="md-error" v-if="!$v.form.email.required">The password is required</span>
             <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
           </md-field>
 
           <md-field :class="getValidationClass('email')">
             <label for="email">Confirm Password</label>
             <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
+            <span class="md-error" v-if="!$v.form.email.required">The password is required</span>
             <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
           </md-field>
 
@@ -147,11 +147,4 @@
     right: 0;
     left: 0;
   }
-
-  .backgroundStyle {
-    background-color: rgba(255, 255, 255, 0.6);
-    color: #404243;
-    border-radius: 5px;
-  }
-
 </style>

@@ -2,7 +2,7 @@
   <div class="topbar">
     <md-app>
       <md-app-toolbar class="center">
-        <a class="md-title whiteFont" href="/">Splitzz</a>
+        <a class="md-title whiteFont navbarSize" href="/">Splitzz</a>
       </md-app-toolbar>
     </md-app>
   </div>

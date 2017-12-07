@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="Site">
     <Topbar class="darkGrey"></Topbar>
-    <router-view class="container wavesImage"/>
+    <router-view class="container wavesImage Site-content"/>
     <Bottombar class="darkGrey"></Bottombar>
   </div>
 </template>
@@ -20,11 +20,22 @@ export default {
 </script>
 
 <style lang="scss">
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}
 
 .container{
   min-height: 100%;
   min-width: 100%;
-  padding: 20px 150px;
+  padding: 30px 300px;
+  display: flex;
+  justify-content: center;
 }
 
 #app {
@@ -78,6 +89,26 @@ export default {
   background-color: rgba(255, 255, 255, 0.6);
   color: #404243;
   border-radius: 5px;
+}
+
+.circleButton {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #404243;
+}
+
+.backgroundStyle {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #404243;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.navbarSize {
+  font-size: 31px;
 }
 
 </style>

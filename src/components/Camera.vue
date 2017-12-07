@@ -14,7 +14,7 @@
         <video class="cam" autoplay></video>
       </div>
       <br><br>
-      <img src="">
+      <img class="cam" src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
       <br>
       <md-button class="md-icon-button md-raised circleButton"
@@ -27,13 +27,13 @@
         <md-button
           v-on:click="toggleCamera"
           class="md-raised md-primary buttonStyle">
-          Scan New Receipt
+          Scan Receipt
         </md-button>
-
+        <br>
         <md-button
           v-on:click="vision"
           class="md-raised md-primary buttonStyle">
-          Vision
+          View Receipt
         </md-button>
       </div>
 
@@ -187,10 +187,5 @@
 
 .cam {
   border-radius: 15px;
-}
-
-.circleButton {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #404243;
 }
 </style>

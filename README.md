@@ -42,8 +42,7 @@ npm run build --report
 
 ## <center> User Stories
 
-1. As a user, I can scan multiple receipts for different restaurants
-2. As a user, I can view a list of past receipts for different restaurants I have scanned previously
+1. As a user, I can scan multiple receipts for different restaurant
 3. As a user, I can calculate how much is my portion of the bill
 ___
 
@@ -51,19 +50,19 @@ ___
 * GST and service charge is not included in prices of menu items
 
 ## <center> To Do List
-Description    | Importance | Type
+**COMPLETED**  | Importance | Type
 -------- | --- | ---  
-Split the results from OCR API to accurately display the menu items/restaurant name/datetime in the bill | **HIGH** | Framework
-Come up with function to accurately sum total from checked menu items to accurately display the amount payable | **HIGH** | Framework
-Add components for pages | **HIGH** | Framework
-Add routes for pages | **HIGH** | Framework
-**COMPLETED** | ---- | ----
 ~~Add OCR API to allow users to split the bill~~ | **HIGH** | Framework
 ~~Add Camera API to take photo of receipt~~ | **HIGH** | Framework
 ~~Update README with latest erd, wireframe images and user stories~~ | Low | Framework
 ~~Add materialize for vue~~ | **HIGH** | Framework
+~~Add components for pages~~ | **HIGH** | Framework
+~~Add routes for pages~~ | **HIGH** | Framework
+~~Split the results from OCR API to accurately display the menu items in the bill~~ | **HIGH** | Framework
+~~Come up with function to accurately sum total from checked menu items to accurately display the amount payable~~ | **HIGH** | Framework
 
 
 ## Potential Improvements
-* Login Authentication
+* Retrieve restaurant name and datetime data and display accurately
+* View previously scanned receipts
 * Groups to share bills

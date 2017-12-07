@@ -1,41 +1,43 @@
 <template>
   <div class="receipt">
-    <h1>Receipt</h1>
-    <tr>
-      <th>Qty</th>
-      <th>Item</th>
-      <th>Unit Price</th>
-    </tr>
-    <tr v-for="item in receipt">
-      <td>{{item.quantity}}</td>
-      <td>{{item.item}}</td>
-      <td>{{item.price}}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Sub-Total: </th>
-      <td v-if="subTotal !== 0">${{ subTotal }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Service Charge: </th>
-      <td v-if="subTotal !== 0">${{ svcChg }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>GST: </th>
-      <td v-if="subTotal !== 0">${{ gst }}</td>
-    </tr>
-    <tr v-if="rounding !== 0">
-      <th></th>
-      <th>Rounding: </th>
-      <td>- ${{ rounding }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Total: </th>
-      <td>${{ total }}</td>
-    </tr>
+    <div class="backgroundStyle">
+      <h1>Receipt</h1>
+      <tr>
+        <th>Qty</th>
+        <th>Item</th>
+        <th>Unit Price</th>
+      </tr>
+      <tr v-for="item in receipt">
+        <td>{{item.quantity}}</td>
+        <td>{{item.item}}</td>
+        <td>{{item.price}}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th>Sub-Total: </th>
+        <td v-if="subTotal !== 0">${{ subTotal }}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th>Service Charge: </th>
+        <td v-if="subTotal !== 0">${{ svcChg }}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th>GST: </th>
+        <td v-if="subTotal !== 0">${{ gst }}</td>
+      </tr>
+      <tr v-if="rounding !== 0">
+        <th></th>
+        <th>Rounding: </th>
+        <td>- ${{ rounding }}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th>Total: </th>
+        <td>${{ total }}</td>
+      </tr>
+    </div>
   </div>
 </template>
 
