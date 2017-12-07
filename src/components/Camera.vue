@@ -14,7 +14,7 @@
         <video class="cam" autoplay></video>
       </div>
       <br><br>
-      <img class="cam" src="">
+      <img src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
       <br>
       <md-button class="md-icon-button md-raised"
@@ -48,7 +48,8 @@
       return {
         stream: null,
         isCapturing: false,
-        image: null
+        image: null,
+        receipt: []
       }
     },
     methods: {
@@ -156,7 +157,15 @@
             // console.log(i, itemObj) // <-- TESTING ONLY
           }
           // console.log('responseArr: ', responseArr) // <-- TESTING ONLY
-          console.log('receipt: ', receipt)
+          this.receipt = receipt
+          console.log('receipt: ', this.receipt)
+          document.querySelector('img').src = ''
+          this.$router.push({
+            name: 'receipt',
+            params: {
+              initialReceipt: this.receipt
+            }
+          })
         }, response => {
           console.log('error', response)
         })
