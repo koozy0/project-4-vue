@@ -1,7 +1,7 @@
 <template>
   <div class="receipt">
-    <div class="backgroundStyle">
-      <h1>Receipt</h1>
+    <md-card class="md-flex-50 md-flex-small-100 backgroundStyle">
+      <h1 class="md-title">Receipt</h1>
       <div v-if="initialReceipt !== undefined">
         <table>
           <tr>
@@ -57,13 +57,13 @@
         <br>
         <md-button
           v-on:click="getSubTotal"
-          class="md-raised md-primary">
+          class="md-primary buttonStyle">
           Calculate
         </md-button>
       </div>
       <h3 v-else>Please scan a receipt</h3>
       <br>
-    </div>
+    </md-card>
   </div>
 </template>
 
@@ -159,5 +159,9 @@ th, td {
   text-align: left;
   padding: 10px;
   font-size: 20px;
+}
+
+md-card {
+  padding: 16px 16px 24px 16px;
 }
 </style>
