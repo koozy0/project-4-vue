@@ -93,7 +93,7 @@
         this.toggleCamera()
       },
       vision: function () {
-        const key = 'AIzaSyBawpo7NovwPMYtBr_K-71BaF--_hluLSA'
+        const key = process.env.API_KEY
         const url = `https://vision.googleapis.com/v1/images:annotate?key=${key}`
         let content = this.image.replace('data:image/webp;base64,', '')
         let body =

@@ -160,8 +160,7 @@ th, td {
   padding: 10px;
   font-size: 20px;
 }
-
-md-card {
+.md-card {
   padding: 16px 16px 24px 16px;
 }
 </style>
