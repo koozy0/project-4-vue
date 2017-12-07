@@ -22,11 +22,21 @@
         v-on:click="snapshot">
         <md-icon>camera_alt</md-icon>
       </md-button>
-      <md-button
-        v-else
-        v-on:click="toggleCamera" class="md-raised md-primary">
-        Scan New Receipt
-      </md-button>
+
+      <div v-else>
+        <md-button
+          v-on:click="toggleCamera"
+          class="md-raised md-primary">
+          Scan New Receipt
+        </md-button>
+
+        <md-button
+          v-on:click="vision"
+          class="md-raised md-primary">
+          Vision
+        </md-button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -37,7 +47,8 @@
     data() {
       return {
         stream: null,
-        isCapturing: false
+        isCapturing: false,
+        image: null
       }
     },
     methods: {
@@ -73,11 +84,82 @@
         const video = document.querySelector('video')
 
         if (that.stream) {
-          ctx.drawImage(video, 0, 0, 640, 480);
-          document.querySelector('img').src = canvas.toDataURL('image/webp');
+          ctx.drawImage(video, 0, 0, 640, 480)
+          that.image = canvas.toDataURL('image/webp')
+          document.querySelector('img').src = that.image
         }
 
         this.toggleCamera()
+      },
+      vision: function () {
+        const key = 'AIzaSyBawpo7NovwPMYtBr_K-71BaF--_hluLSA'
+        const url = `https://vision.googleapis.com/v1/images:annotate?key=${key}`
+        let content = this.image.replace('data:image/webp;base64,', '')
+        let body =
+        {
+          requests: [
+            {
+              image: { content: content },
+              features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
+              imageContext: {languageHints: ['en']}
+            }
+          ]
+        }
+        this.$http.post(url, body)
+        .then(response => {
+          const checkNewRow = function () {
+            if (itemObj.quantity !== 0 && itemObj.item !== '' && itemObj.price.match(/^\$\d{0,8}([\.\,]\d{1,2})?$/)) {
+              itemObj.item = itemObj.item.slice(0, -1)
+              itemObj.price = itemObj.price.replace(',', '.')
+              receipt.push(itemObj)
+              itemObj = {
+                quantity: 0,
+                item: '',
+                price: ''
+              }
+            }
+          }
+
+          let responseText = response.body.responses[0].textAnnotations[0].description.split('\n')
+          let responseArr = response.body.responses[0].textAnnotations
+          responseArr.shift()
+          responseArr.sort(function(a, b) {
+            let x = a.boundingPoly.vertices[0].y - b.boundingPoly.vertices[0].y
+            return x == 0 ? a.boundingPoly.vertices[0].x - b.boundingPoly.vertices[0].x : x
+          })
+
+          let itemObj = {
+            quantity: 0,
+            item: '',
+            price: ''
+          }
+
+          let receipt = []
+
+          for (let i = 0, len = responseArr.length; i < len; i++) {
+            let elem = responseArr[i].description
+
+            if (elem === '$') {
+              checkNewRow()
+
+              itemObj.price += elem + responseArr[i+1].description + responseArr[i+2].description + responseArr[i+3].description
+              i += 3
+            } else if (!isNaN(parseInt(elem))) {
+              checkNewRow()
+
+              if (itemObj.quantity === 0) itemObj.quantity = parseInt(elem)
+            } else {
+              itemObj.item += elem + ' '
+            }
+
+            checkNewRow()
+            // console.log(i, itemObj) // <-- TESTING ONLY
+          }
+          // console.log('responseArr: ', responseArr) // <-- TESTING ONLY
+          console.log('receipt: ', receipt)
+        }, response => {
+          console.log('error', response)
+        })
       }
     }
   }
