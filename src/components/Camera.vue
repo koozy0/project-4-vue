@@ -1,17 +1,27 @@
 <template>
   <div class="camera">
     <div id="mobile">
+      <br>
       <p>Capture Image: <input type="file" accept="image/*" id="capture" capture="camera"></p>
+      <br>
     </div>
 
     <div id="desktop">
+      <br>
       <div id="video">
-        <video autoplay></video>
+        <video class="cam" autoplay></video>
       </div>
-      <img src="">
+      <br>
+      <br>
+      <img class="cam" src="">
       <canvas style="display:none;" height="480" width="640"></canvas>
-      <button v-if="isCapturing" v-on:click="snapshot">Take Snapshot</button>
-      <button v-else v-on:click="toggleCamera">Toggle Camera</button>
+      <br>
+      <md-button class="md-icon-button md-raised" v-if="isCapturing" v-on:click="snapshot">
+        <md-icon>camera_alt</md-icon>
+      </md-button>
+      <md-button v-else v-on:click="toggleCamera" class="md-raised md-primary">Scan New Receipt</md-button>
+
+
     </div>
   </div>
 </template>
@@ -77,5 +87,9 @@
 @media screen and (min-width: 481px) {
   #desktop { display: block; }  /* show it on large screens */
   #mobile { display: none; } /* hide it on large screens */
+}
+
+.cam {
+  border: 1px solid black;
 }
 </style>

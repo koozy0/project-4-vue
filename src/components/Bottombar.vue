@@ -14,18 +14,10 @@
 
 <script>
   export default {
-    name: 'BarRouter'
+    name: 'BottomBar'
   }
 </script>
 
 <style scoped>
-.phone-viewport {
-  width: 375px;
-  height: 600px;
-  display: inline-flex;
-  align-items: flex-end;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.26);
-  background: white;
-}
+
 </style>
