@@ -129,10 +129,10 @@
             }
 
             checkNewRow()
-            // console.log(i, itemObj) <-- TESTING ONLY
+            // console.log(i, itemObj)
           }
-          // console.log('responseArr: ', responseArr) <-- TESTING ONLY
-          // console.log('receipt: ', receipt) <-- TESTING ONLY
+          // console.log('responseArr: ', responseArr)
+          console.log('receipt: ', receipt)
         }, response => {
           console.log('error', response)
         })
