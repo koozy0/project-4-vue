@@ -156,7 +156,6 @@
             checkNewRow()
           }
           this.receipt = receipt
-          console.log('receipt: ', this.receipt)
           document.querySelector('img').src = ''
           this.$router.push({
             name: 'receipt',
