@@ -3,7 +3,12 @@
     <div id="mobile">
       <br>
       <p>Capture Image:
-        <input type="file" accept="image/*" id="capture" capture="camera">
+        <form enctype="multipart/form-data">
+          <input type="file" name="image" accept="image/*" capture="camera" id="capture">
+          <input type="submit" value="Upload"
+            v-on:click="submit">
+        </form>
+        <!-- <input type="file" accept="image/*" id="capture" capture="camera"> -->
       </p>
       <br>
     </div>
@@ -53,6 +58,23 @@
       }
     },
     methods: {
+      submit: function (e) {
+        var that = this
+        e.preventDefault()
+        var file = document.querySelector('input[type=file]').files[0]
+        var reader = new FileReader()
+        console.log(file)
+
+        reader.addEventListener("load", function () {
+          that.image = reader.result
+
+          that.vision()
+        }, false);
+
+        if (file) {
+          reader.readAsDataURL(file)
+        }
+      },
       toggleCamera: function () {
         const errorCallback = function() {
           console.log('Error')
@@ -95,7 +117,7 @@
       vision: function () {
         const key = process.env.API_KEY
         const url = `https://vision.googleapis.com/v1/images:annotate?key=${key}`
-        let content = this.image.replace('data:image/webp;base64,', '')
+        let content = this.image.split(',')[1]
         let body =
         {
           requests: [

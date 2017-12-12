@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="Site">
-    <Topbar class="darkGrey"></Topbar>
-    <router-view class="container wavesImage Site-content"/>
-    <Bottombar class="darkGrey"></Bottombar>
+  <div id="app">
+    <Topbar></Topbar>
+    <router-view class="container content"/>
+    <Bottombar></Bottombar>
   </div>
 </template>
 
@@ -20,20 +20,14 @@ export default {
 </script>
 
 <style lang="scss">
-.Site {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+.content {
+  background-color: #55D6BE;
+  flex: 1 0 auto;
 }
-
-.Site-content {
-  flex: 1;
-}
-
 .container{
   min-height: 100%;
   min-width: 100%;
-  padding: 30px 300px;
+  padding: 30px;
   display: flex;
   justify-content: center;
 }
@@ -45,6 +39,7 @@ export default {
   text-align: center;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .md-ripple.md-disabled {
@@ -71,18 +66,12 @@ export default {
   text-decoration: none !important;
 }
 
-.darkGrey {
+.topbar, .bottombar {
   background-color: #404243;
 }
 
 .whiteFont {
   color:white;
-}
-
-.wavesImage {
-  background-image: url('./assets/images/waves.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .buttonStyle {
