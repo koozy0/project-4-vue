@@ -1,28 +1,32 @@
 <template>
   <div class="camera">
-    <div id="mobile">
-      <br>
-      <p>Capture Image:
-        <form enctype="multipart/form-data">
-          <input type="file" name="image" accept="image/*" capture="camera" id="capture">
-          <input type="submit" value="Upload"
-            v-on:click="submit">
-        </form>
-        <!-- <input type="file" accept="image/*" id="capture" capture="camera"> -->
-      </p>
-      <br>
+    <div class="loading" v-if="isLoading">
+      <rotate-square2></rotate-square2>
+      <p>Loading...</p>
     </div>
-
-    <div id="desktop">
-      <br>
-      <div id="video">
-        <video class="cam" autoplay></video>
+    <div class="capture" v-else>
+      <div id="mobile">
+        <br>
+        <p>Capture Image:
+          <form enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" capture="camera" id="capture">
+            <input type="submit" value="Upload"
+            v-on:click="submit">
+          </form>
+        </p>
+        <br>
       </div>
-      <br><br>
-      <img class="cam" src="">
-      <canvas style="display:none;" height="480" width="640"></canvas>
-      <br>
-      <md-button class="md-icon-button md-raised circleButton"
+
+      <div id="desktop">
+        <br>
+        <div id="video">
+          <video class="cam" autoplay></video>
+        </div>
+        <br><br>
+        <img class="cam" src="">
+        <canvas style="display:none;" height="480" width="640"></canvas>
+        <br>
+        <md-button class="md-icon-button md-raised circleButton"
         v-if="isCapturing"
         v-on:click="snapshot">
         <md-icon>camera_alt</md-icon>
@@ -30,31 +34,37 @@
 
       <div v-else>
         <md-button
-          v-on:click="toggleCamera"
-          class="md-raised md-primary buttonStyle">
-          Scan Receipt
-        </md-button>
-        <br>
-        <md-button
-          v-on:click="vision"
-          class="md-raised md-primary buttonStyle">
-          View Receipt
-        </md-button>
-      </div>
-
+        v-on:click="toggleCamera"
+        class="md-raised md-primary buttonStyle">
+        Scan Receipt
+      </md-button>
+      <br>
+      <md-button
+      v-on:click="vision"
+      class="md-raised md-primary buttonStyle">
+      View Receipt
+    </md-button>
+  </div>
+</div>
     </div>
   </div>
 </template>
 
 <script>
+  import {RotateSquare2} from 'vue-loading-spinner'
+
   export default {
     name: 'camera',
+    components: {
+      RotateSquare2
+    },
     data() {
       return {
         stream: null,
         isCapturing: false,
         image: null,
-        receipt: []
+        receipt: [],
+        isLoading: false
       }
     },
     methods: {
@@ -63,11 +73,9 @@
         e.preventDefault()
         var file = document.querySelector('input[type=file]').files[0]
         var reader = new FileReader()
-        console.log(file)
 
         reader.addEventListener("load", function () {
           that.image = reader.result
-
           that.vision()
         }, false);
 
@@ -128,6 +136,7 @@
             }
           ]
         }
+        this.isLoading = true
         this.$http.post(url, body)
         .then(response => {
           const checkNewRow = function () {
@@ -178,7 +187,8 @@
             checkNewRow()
           }
           this.receipt = receipt
-          document.querySelector('img').src = ''
+          if (document.querySelector('img')) document.querySelector('img').src = ''
+          this.isLoading = false
           this.$router.push({
             name: 'receipt',
             params: {
@@ -206,5 +216,16 @@
 
 .cam {
   border-radius: 15px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.capture {
+  display: flex;
+  align-items: center;
 }
 </style>
