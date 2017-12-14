@@ -21,7 +21,9 @@ export default {
 
 <style lang="scss">
 .content {
-  background-color: #55D6BE;
+  background-image: url(./assets/images/waves.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   flex: 1 0 auto;
 }
 .container{
